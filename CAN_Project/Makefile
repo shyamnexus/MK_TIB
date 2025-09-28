@@ -1,4 +1,4 @@
-# Makefile for CAN Project with ASF 3.52
+# Makefile for CAN Project with MPLAB Harmony 3.0
 # Target: ATSAM4S16C
 # Crystal: 16MHz
 
@@ -8,51 +8,29 @@ PROJECT_NAME = CAN_Project
 # Target device
 TARGET = atsam4s16c
 
-# ASF version
-ASF_VERSION = 3.52.0
+# Harmony version
+HARMONY_VERSION = 3.0
 
-# ASF path (adjust as needed)
-ASF_PATH = $(HOME)/asf-$(ASF_VERSION)
+# Harmony path (adjust as needed)
+HARMONY_PATH = $(HOME)/harmony-$(HARMONY_VERSION)
 
 # Source files
-SRC_FILES = main.c
+SRC_FILES = main.c system_init.c system_tasks.c system_interrupt.c
 
 # Configuration files
-CONF_FILES = conf_board.h conf_clock.h conf_can.h
+CONF_FILES = conf_board.h conf_clock.h conf_can.h system_config.h system_definitions.h harmony_config.h
 
-# ASF modules to include
-ASF_MODULES = \
-	services/delay \
-	drivers/can \
-	drivers/gpio \
-	drivers/pmc \
-	drivers/pio \
-	drivers/tc \
-	common/services/clock \
-	common/services/delay \
-	common/services/gpio \
-	common/services/ioport \
-	common/services/serial \
-	common/services/sleepmgr \
-	common/services/usb \
-	common/services/usb/class/cdc \
-	common/services/usb/class/cdc/device \
-	common/services/usb/udc \
-	common/utils \
-	common/utils/stdio/stdio_serial \
-	common/utils/stdio/stdio_usb \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc \
-	common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
+# Harmony modules to include
+HARMONY_MODULES = \
+	framework/system/clk \
+	framework/system/tmr \
+	framework/system/tasks \
+	framework/driver/can \
+	framework/driver/gpio \
+	framework/driver/tmr \
+	framework/system/common \
+	framework/system/int \
+	framework/system/ports
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -Werror -std=c99 -O2 -g3
@@ -63,39 +41,17 @@ CFLAGS += -D__SAM4S16C__
 CFLAGS += -D__SAM4S16C__
 
 # Include paths
-INCLUDES = -I. -I$(ASF_PATH)/common/boards -I$(ASF_PATH)/common/utils
-INCLUDES += -I$(ASF_PATH)/common/services/clock
-INCLUDES += -I$(ASF_PATH)/common/services/delay
-INCLUDES += -I$(ASF_PATH)/common/services/gpio
-INCLUDES += -I$(ASF_PATH)/common/services/ioport
-INCLUDES += -I$(ASF_PATH)/common/services/serial
-INCLUDES += -I$(ASF_PATH)/common/services/sleepmgr
-INCLUDES += -I$(ASF_PATH)/common/services/usb
-INCLUDES += -I$(ASF_PATH)/common/services/usb/class/cdc
-INCLUDES += -I$(ASF_PATH)/common/services/usb/class/cdc/device
-INCLUDES += -I$(ASF_PATH)/common/services/usb/udc
-INCLUDES += -I$(ASF_PATH)/common/utils
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_serial
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/common/utils/stdio/stdio_usb/stdio_usb_cdc/stdio_usb_cdc_cdc/stdio_usb_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc/stdio_usb_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc_cdc
-INCLUDES += -I$(ASF_PATH)/drivers/can
-INCLUDES += -I$(ASF_PATH)/drivers/gpio
-INCLUDES += -I$(ASF_PATH)/drivers/pmc
-INCLUDES += -I$(ASF_PATH)/drivers/pio
-INCLUDES += -I$(ASF_PATH)/drivers/tc
-INCLUDES += -I$(ASF_PATH)/services/delay
+INCLUDES = -I. -I$(HARMONY_PATH)/framework -I$(HARMONY_PATH)/bsp
+INCLUDES += -I$(HARMONY_PATH)/framework/system/clk
+INCLUDES += -I$(HARMONY_PATH)/framework/system/tmr
+INCLUDES += -I$(HARMONY_PATH)/framework/system/tasks
+INCLUDES += -I$(HARMONY_PATH)/framework/driver/can
+INCLUDES += -I$(HARMONY_PATH)/framework/driver/gpio
+INCLUDES += -I$(HARMONY_PATH)/framework/driver/tmr
+INCLUDES += -I$(HARMONY_PATH)/framework/system/common
+INCLUDES += -I$(HARMONY_PATH)/framework/system/int
+INCLUDES += -I$(HARMONY_PATH)/framework/system/ports
+INCLUDES += -I$(HARMONY_PATH)/bsp/ATSAM4S16C
 
 # Linker flags
 LDFLAGS = -Wl,--gc-sections -Wl,--relax

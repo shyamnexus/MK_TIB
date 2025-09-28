@@ -1,11 +1,9 @@
 /**
  * \file
  *
- * \brief CAN Example for ASF 3.52
+ * \brief CAN Example for MPLAB Harmony 3.0
  *
- * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
- *
- * \asf_license_start
+ * Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -24,63 +22,34 @@
  * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
  * POSSIBILITY OR THE DAMAGE.
  *
- * \asf_license_stop
- *
  */
 
-#include <asf.h>
-#include "conf_board.h"
-#include "conf_clock.h"
-#include "conf_can.h"
+#include "system_definitions.h"
+#include "system_config.h"
+#include "system_init.h"
+#include "system_tasks.h"
 
-// CAN message structure
-typedef struct {
-	uint32_t id;
-	uint8_t data[8];
-	uint8_t length;
-} can_message_t;
-
-// Global variables
-static can_message_t rx_message;
-static can_message_t tx_message;
-static volatile bool can_rx_flag = false;
-static volatile bool can_tx_flag = false;
+// Global system data
+SYSTEM_DATA sysData = {0};
 
 /**
- * \brief CAN RX interrupt handler
+ * \brief CAN RX callback function
  */
-static void can_rx_handler(void)
+void CAN_RX_Callback(DRV_CAN_BUFFER_EVENT event, uintptr_t context)
 {
-	can_rx_flag = true;
+    if (event == DRV_CAN_BUFFER_EVENT_COMPLETE) {
+        sysData.canRxFlag = true;
+    }
 }
 
 /**
- * \brief CAN TX interrupt handler
+ * \brief CAN TX callback function
  */
-static void can_tx_handler(void)
+void CAN_TX_Callback(DRV_CAN_BUFFER_EVENT event, uintptr_t context)
 {
-	can_tx_flag = true;
-}
-
-/**
- * \brief Initialize CAN module
- */
-static void can_init(void)
-{
-	// Configure CAN pins
-	gpio_configure_pin(CAN_TX_PIN, CAN_TX_FLAGS);
-	gpio_configure_pin(CAN_RX_PIN, CAN_RX_FLAGS);
-	
-	// Initialize CAN controller
-	can_init(CAN_BAUDRATE_500KBPS, CAN_MODE_NORMAL);
-	
-	// Enable CAN interrupts
-	can_enable_interrupt(CAN_INTERRUPT_RX);
-	can_enable_interrupt(CAN_INTERRUPT_TX);
-	
-	// Set interrupt handlers
-	can_set_rx_handler(can_rx_handler);
-	can_set_tx_handler(can_tx_handler);
+    if (event == DRV_CAN_BUFFER_EVENT_COMPLETE) {
+        sysData.canTxFlag = true;
+    }
 }
 
 /**
@@ -88,31 +57,34 @@ static void can_init(void)
  */
 static void can_send_message(uint32_t id, uint8_t *data, uint8_t length)
 {
-	tx_message.id = id;
-	tx_message.length = length;
-	
-	for (uint8_t i = 0; i < length; i++) {
-		tx_message.data[i] = data[i];
-	}
-	
-	can_tx_flag = false;
-	can_send(&tx_message);
-	
-	// Wait for transmission complete
-	while (!can_tx_flag);
+    DRV_CAN_BUFFER_OBJECT bufferObj;
+    
+    bufferObj.id = id;
+    bufferObj.length = length;
+    bufferObj.extended = false;
+    
+    for (uint8_t i = 0; i < length; i++) {
+        bufferObj.data[i] = data[i];
+    }
+    
+    sysData.canTxFlag = false;
+    DRV_CAN_Write(sysData.canHandle, &bufferObj);
+    
+    // Wait for transmission complete
+    while (!sysData.canTxFlag);
 }
 
 /**
  * \brief Receive CAN message
  */
-static bool can_receive_message(can_message_t *message)
+static bool can_receive_message(CAN_MESSAGE *message)
 {
-	if (can_rx_flag) {
-		can_rx_flag = false;
-		*message = rx_message;
-		return true;
-	}
-	return false;
+    if (sysData.canRxFlag) {
+        sysData.canRxFlag = false;
+        *message = sysData.rxMessage;
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -120,29 +92,36 @@ static bool can_receive_message(can_message_t *message)
  */
 int main(void)
 {
-	// Initialize system
-	sysclk_init();
-	board_init();
-	
-	// Initialize CAN
-	can_init();
-	
-	// Enable global interrupts
-	cpu_irq_enable();
-	
-	// Initialize message data
-	uint8_t test_data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-	
-	// Main loop
-	while (1) {
-		// Send test message every 1 second
-		delay_ms(1000);
-		can_send_message(0x123, test_data, 8);
-		
-		// Check for received messages
-		if (can_receive_message(&rx_message)) {
-			// Process received message
-			// Add your message processing logic here
-		}
-	}
+    // Initialize system
+    SYS_Initialize(NULL);
+    
+    // Initialize CAN driver
+    sysData.canHandle = DRV_CAN_Open(DRV_CAN_INDEX_0, DRV_IO_INTENT_READWRITE);
+    if (sysData.canHandle == DRV_HANDLE_INVALID) {
+        // Handle error
+        while(1);
+    }
+    
+    // Set up CAN callbacks
+    DRV_CAN_BufferEventHandlerSet(sysData.canHandle, CAN_RX_Callback, 0);
+    DRV_CAN_BufferEventHandlerSet(sysData.canHandle, CAN_TX_Callback, 0);
+    
+    // Initialize message data
+    uint8_t test_data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+    
+    // Main loop
+    while (1) {
+        // Send test message every 1 second
+        SYS_TMR_DelayMS(1000);
+        can_send_message(0x123, test_data, 8);
+        
+        // Check for received messages
+        if (can_receive_message(&sysData.rxMessage)) {
+            // Process received message
+            // Add your message processing logic here
+        }
+        
+        // Run system tasks
+        SYS_Tasks();
+    }
 }
