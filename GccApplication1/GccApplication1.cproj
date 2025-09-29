@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
@@ -32,6 +32,7 @@
       <framework-data>
   <options>
     <option id="sam.drivers.can" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.pmc" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
   </options>
   <configurations>
@@ -43,6 +44,9 @@
     <file path="src/ASF/common/boards/board.h" framework="" version="3.52.0" source="common\boards\board.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/drivers/can/can.c" framework="" version="3.52.0" source="sam\drivers\can\can.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/drivers/can/can.h" framework="" version="3.52.0" source="sam\drivers\can\can.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/pmc/pmc.c" framework="" version="3.52.0" source="sam\drivers\pmc\pmc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/pmc/pmc.h" framework="" version="3.52.0" source="sam\drivers\pmc\pmc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/utils/cmsis/sam4e/include/sam.h" framework="" version="3.52.0" source="sam\utils\cmsis\sam4e\include\sam.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/utils/make/Makefile.sam.in" framework="" version="3.52.0" source="sam\utils\make\Makefile.sam.in" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/common/utils/interrupt/interrupt_sam_nvic.c" framework="" version="3.52.0" source="common\utils\interrupt\interrupt_sam_nvic.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/common/utils/interrupt.h" framework="" version="3.52.0" source="common\utils\interrupt.h" changed="False" content-id="Atmel.ASF" />

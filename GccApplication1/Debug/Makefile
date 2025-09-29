@@ -43,6 +43,7 @@ SUBDIRS :=  \
 ../src/ASF/sam/ \
 ../src/ASF/sam/drivers/ \
 ../src/ASF/sam/drivers/can/ \
+../src/ASF/sam/drivers/pmc/ \
 ../src/ASF/sam/utils/ \
 ../src/ASF/sam/utils/cmsis/ \
 ../src/ASF/sam/utils/cmsis/sam4e/ \
@@ -73,7 +74,8 @@ C_SRCS +=  \
 ../main.c \
 ../src/ASF/sam/utils/syscalls/gcc/syscalls.c \
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.c \
-../src/ASF/sam/drivers/can/can.c
+../src/ASF/sam/drivers/can/can.c \
+../src/ASF/sam/drivers/pmc/pmc.c
 
 
 PREPROCESSING_SRCS += 
@@ -88,7 +90,8 @@ Device_Startup/system_sam4e.o \
 main.o \
 src/ASF/sam/utils/syscalls/gcc/syscalls.o \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
-src/ASF/sam/drivers/can/can.o
+src/ASF/sam/drivers/can/can.o \
+src/ASF/sam/drivers/pmc/pmc.o
 
 OBJS_AS_ARGS +=  \
 Device_Startup/startup_sam4e.o \
@@ -96,7 +99,8 @@ Device_Startup/system_sam4e.o \
 main.o \
 src/ASF/sam/utils/syscalls/gcc/syscalls.o \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
-src/ASF/sam/drivers/can/can.o
+src/ASF/sam/drivers/can/can.o \
+src/ASF/sam/drivers/pmc/pmc.o
 
 C_DEPS +=  \
 Device_Startup/startup_sam4e.d \
@@ -104,7 +108,8 @@ Device_Startup/system_sam4e.d \
 main.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
-src/ASF/sam/drivers/can/can.d
+src/ASF/sam/drivers/can/can.d \
+src/ASF/sam/drivers/pmc/pmc.d
 
 C_DEPS_AS_ARGS +=  \
 Device_Startup/startup_sam4e.d \
@@ -112,7 +117,8 @@ Device_Startup/system_sam4e.d \
 main.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
-src/ASF/sam/drivers/can/can.d
+src/ASF/sam/drivers/can/can.d \
+src/ASF/sam/drivers/pmc/pmc.d
 
 OUTPUT_FILE_PATH +=GccApplication1.elf
 
