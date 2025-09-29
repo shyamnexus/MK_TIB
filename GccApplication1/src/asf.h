@@ -55,6 +55,9 @@
 // From module: CAN - Controller Area Network
 #include <can.h>
 
+// From module: PMC - Power Management Controller
+#include <pmc.h>
+
 // From module: Common SAM compiler driver
 #include <compiler.h>
 #include <status_codes.h>

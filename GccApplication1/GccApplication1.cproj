@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
@@ -32,6 +32,7 @@
       <framework-data>
   <options>
     <option id="sam.drivers.can" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.pmc" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
   </options>
   <configurations>
@@ -43,6 +44,8 @@
     <file path="src/ASF/common/boards/board.h" framework="" version="3.52.0" source="common\boards\board.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/drivers/can/can.c" framework="" version="3.52.0" source="sam\drivers\can\can.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/drivers/can/can.h" framework="" version="3.52.0" source="sam\drivers\can\can.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/pmc/pmc.c" framework="" version="3.52.0" source="sam\drivers\pmc\pmc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/pmc/pmc.h" framework="" version="3.52.0" source="sam\drivers\pmc\pmc.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/sam/utils/make/Makefile.sam.in" framework="" version="3.52.0" source="sam\utils\make\Makefile.sam.in" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/common/utils/interrupt/interrupt_sam_nvic.c" framework="" version="3.52.0" source="common\utils\interrupt\interrupt_sam_nvic.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/common/utils/interrupt.h" framework="" version="3.52.0" source="common\utils\interrupt.h" changed="False" content-id="Atmel.ASF" />
@@ -190,6 +193,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -224,6 +228,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -242,6 +247,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -278,6 +284,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -313,6 +320,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -332,6 +340,7 @@
       <Value>%24(PackRepoDir)\atmel\SAM4E_DFP\1.1.57\ic.sam4e\include</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/sam/drivers/can</Value>
+      <Value>../src/ASF/sam/drivers/pmc</Value>
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam/utils</Value>
       <Value>../src/ASF/sam/utils/header_files</Value>
@@ -681,7 +690,13 @@
     <Compile Include="src\ASF\sam\drivers\can\can.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\ASF\sam\drivers\pmc\pmc.c">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\ASF\sam\drivers\can\can.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam\drivers\pmc\pmc.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\common\boards\board.h">
@@ -714,6 +729,7 @@
     <Folder Include="src\ASF\sam\" />
     <Folder Include="src\ASF\sam\drivers\" />
     <Folder Include="src\ASF\sam\drivers\can\" />
+    <Folder Include="src\ASF\sam\drivers\pmc\" />
     <Folder Include="src\ASF\sam\utils\" />
     <Folder Include="src\ASF\sam\utils\cmsis\" />
     <Folder Include="src\ASF\sam\utils\cmsis\sam4e\" />
