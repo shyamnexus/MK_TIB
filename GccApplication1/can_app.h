@@ -27,6 +27,13 @@ uint8_t can_message_received(void);
 void can_clear_rx_flag(void);
 void can_get_received_message(can_message_t *msg);
 
+// CAN Loopback Test Functions
+void can_init_loopback_test(void);
+uint8_t can_loopback_test_send(uint32_t id, uint8_t *data, uint8_t length);
+uint8_t can_loopback_test_receive(can_message_t *msg);
+void can_loopback_test_complete(void);
+uint8_t can_loopback_test_verify(uint8_t *tx_data, uint8_t *rx_data, uint8_t length);
+
 // Global variables (extern declarations)
 extern volatile uint32_t g_ul_can_rx_status;
 extern can_mb_conf_t g_can_tx_mailbox;
